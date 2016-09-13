@@ -7,7 +7,6 @@ This silly thing generates W3C accessible themes from the CSS colors in [Tachyon
 1. Clone the repo and `cd tachyons-theme-generator`
 2. Run `npm install`
 3. Run `npm start` to generate themes.json
-```
 
 ## More
 
