@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Tachyons Accessible Color Combinations</title>
+        <link rel="stylesheet" href="https://unpkg.com/tachyons@4.3.1/css/tachyons.min.css"/>
+    </head>
+    <body>
+        <article>
+            <h1 class="f2 fw4 pa3 mv0">Combinations</h1>
+            <div id="collection" class="cf pa2"></div>
+        </article>
+        <script>
+         var collection = document.getElementById('collection')
+         var request = new XMLHttpRequest()
+         request.open('GET', 'themes.json', true)
+         request.onload = function () {
+             if (request.status >= 200 && request.status < 400) {
+                 var data = JSON.parse(request.responseText)
+                 loadThemes(data)
+             } else {
+                 alert.msg('An error occurred')
+             }
+         }
+
+         request.onerror = function () {
+             alert.msg('An error occurred')
+         }
+
+         request.send()
+
+         function loadThemes (themes) {
+             themes.map(function (theme) {
+                 var el = document.createElement('h2')
+                 el.setAttribute('class', 'f3 fw4 pa3 mv0')
+                 el.setAttribute('id', theme.name)
+                 el.innerText = theme.name
+                 var ul = document.createElement('ul')
+                 ul.setAttribute('class', 'cf list p10 m10')
+                 theme.combinations.map(function (combo) {
+                     var li = document.createElement('li')
+                     li.setAttribute('class', 'fl w-25')
+                     li.setAttribute('style', 'background-color:' + combo.hex)
+                     var patch = document.createElement('div')
+                     patch.setAttribute('class', 'pa4 mb2')
+                     var lorem = document.createElement('p')
+                     lorem.setAttribute('class', 'lh-copy measure f4')
+                     lorem.setAttribute('style', 'color:' + theme.hex)
+                     lorem.innerText = combo.name
+                     patch.appendChild(lorem)
+                     li.appendChild(patch)
+                     ul.appendChild(li)
+                 })
+                 el.appendChild(ul)
+                 collection.appendChild(el)
+             })
+         }
+        </script>
+    </body>
+</html>
